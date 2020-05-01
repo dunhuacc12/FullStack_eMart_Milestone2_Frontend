@@ -1,0 +1,82 @@
+<div class="div-signup-buyer">
+  <form class="form-signup-buyer" #myForm="ngForm" (ngSubmit)="onSubmit(myForm.value)" novalidate>
+    <h1 class="h3 mb-3 font-weight-normal">Buyer sign up</h1>
+
+    <!-- alert error message when check error -->
+    <p *ngFor="let alert of alerts">
+      <ngb-alert [type]="alert.type" (close)="close(alert)">{{ alert.message }}</ngb-alert>
+    </p>
+
+    <!-- user id -->
+    <label>User Id</label>
+    <input ngModel name="userId" type="text" id="inputUserId" class="form-control" placeholder="User Id">
+
+    <!-- password -->
+    <label>Password</label>
+    <input ngModel name="password" type="password" id="inputPassword" class="form-control" placeholder="Password">
+
+    <!-- confirm password -->
+    <label>Confirm Password</label>
+    <input ngModel name="confirmpassword" type="password" id="confirmPassword" class="form-control"
+      placeholder="Confirm Password">
+
+    <div class='d-flex flex-nowrap'>
+      <!-- User's name -->
+      <div>
+        <label>User Name</label>
+        <input ngModel name="userName" type="text" id="userName" class="form-control" style="width: 280px;">
+      </div>
+
+      <!-- sex -->
+      <div style="padding-left: 40px; width: 150px;">
+        <label>Sex</label><br>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle type="button">{{ sex }}</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button class="dropdown-item" *ngFor="let sexOption of sexOptions" (click)="changeSex(sexOption)"
+              type="button">{{sexOption}}</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Age -->
+      <div style="padding-left: 40px;">
+        <label>Age</label>
+        <input ngModel name="age" type="text" id="age" class="form-control" style="width: 100px;">
+      </div>
+    </div>
+
+    <!-- adress -->
+    <label>Adress</label>
+    <input ngModel name="adress" type="text" id="inputAdress" class="form-control"
+      placeholder="Please enter the street and house number">
+
+    <div class='d-flex flex-nowrap'>
+      <!-- city -->
+      <div>
+        <label>City</label>
+        <input ngModel name="city" type="text" id="city" class="form-control" style="width: 280px;">
+      </div>
+
+      <!-- state -->
+      <div style="padding-left: 40px;">
+        <label>State</label>
+        <input ngModel name="state" type="text" id="state" class="form-control" style="width: 280px;">
+      </div>
+
+      <!-- Zip -->
+      <div style="padding-left: 40px;">
+        <label>Zip</label>
+        <input ngModel name="zip" type="text" id="zip" class="form-control" style="width: 100px;">
+      </div>
+    </div>
+
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> I agree to the personal information agreement
+      </label>
+    </div>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit" style="width: 150px;">Sign up</button>
+  </form>
+</div>

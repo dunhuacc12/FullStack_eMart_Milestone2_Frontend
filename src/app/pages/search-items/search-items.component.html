@@ -1,0 +1,18 @@
+<div class="div-search-items">
+  <form class="form-search-items" #myForm="ngForm" (ngSubmit)="onSubmit(myForm.value)" novalidate>
+
+    <h1 class="h3 mb-3 font-weight-normal">Search Items</h1>
+
+    <!-- search bar -->
+    <div class='d-flex flex-nowrap'>
+      <input [(ngModel)]='searchItemsInfo.searchValue' name="inputSearch" type="text" id="inputSearch" class="form-control" placeholder="Search" style="width: 680px">
+
+      <div style="padding-left: 20px;">
+        <button class="btn btn-lg btn-primary btn-block" type="submit" style="width: 100px;">Search</button>
+      </div>
+    </div>
+    <div style="width: 600px">
+      <button type="button" *ngFor="let searchTip of searchTips" class="btn btn-light search-Tips" (click)="onSearch(searchTip)">{{searchTip}}</button>
+    </div>
+    </form>
+</div>

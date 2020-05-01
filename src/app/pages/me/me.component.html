@@ -1,0 +1,20 @@
+<div class="div-me">
+  <div>
+    <h1 class="h3 mb-3 font-weight-normal">{{user.userName}}</h1>
+  </div>
+  <br>
+  <div>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active list-inline">
+        <a class="nav-link" [routerLink]="['/purchase-history']">Purchase History</a>
+      </li>
+      <li class="nav-item active list-inline">
+        <a class="nav-link" [routerLink]="['/shopping-card']">Shopping Card</a>
+      </li>
+      <!--  -->
+      <li *ngIf="user.isSellerFlg" class="nav-item active list-inline">
+        <a class="nav-link" [routerLink]="['/mystore']">My Store</a>
+      </li>
+    </ul>
+  </div>
+</div>

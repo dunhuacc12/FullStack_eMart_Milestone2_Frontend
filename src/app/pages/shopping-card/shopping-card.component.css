@@ -1,0 +1,44 @@
+.div-shopping-card {
+  text-align: left;
+  margin-top: 40px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  padding: 15px;
+}
+
+.div-shopping-card .form-control {
+  /* position: relative; */
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.div-shopping-card .form-control:focus {
+  z-index: 2;
+}
+
+.div-shopping-card input {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.div-eMartListItem {
+  width: 100%;
+  height: 100%;
+}
+
+.label-title-black {
+  font-size: 14pt;
+  font-weight: normal;
+  color: black;
+  width: 150px;
+}
+
+.label-price-red {
+  font-size: 18pt;
+  font-weight: bold;
+  color: red;
+}

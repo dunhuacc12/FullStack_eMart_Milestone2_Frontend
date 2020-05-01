@@ -1,0 +1,58 @@
+<div class="div-mystore">
+  <div>
+    <h1 class="h3 mb-3 font-weight-normal">{{myStore.storeName}}</h1>
+  </div>
+
+  <div class="d-flex justify-content-around">
+    <button type="button" style="width: 300px;" class="btn btn-primary btn-block" (click)="report()">Report</button>
+    <button type="button" style="margin-left: 20px; width: 300px;" class="btn btn-primary btn-block"
+      (click)="addItem()">Add item</button>
+  </div>
+  <!-- my store product list -->
+  <div class="list-group" style="margin-top: 40px">
+    <div class="list-group-item" *ngFor="let product of myStore.products">
+      <div class="div-eMartListItem d-flex flex-row align-items-center">
+
+        <div style="height: 80px; width: 80px; margin-left: 30px;" class="d-flex align-items-center">
+          <img [src]="product.imgUrl" class="img-fluid" alt="">
+        </div>
+
+        <label class="d-inline-block text-truncate"
+          style="width: 200px; max-width: 300px; margin-left: 50px;">{{product.itemName}}</label>
+
+        <label style="width: 100px; margin-left: 10px;">$ {{product.price}}</label>
+
+        <label style="width: 100px; margin-left: 10px;">{{product.status}}</label>
+
+        <label style="width: 100px; margin-left: 10px;">left {{product.stock_number}}</label>
+
+        <button type="button" style="width: 100px; margin-left: 20px;" class="btn btn-primary btn-block"
+          (click)="open(content, product)">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Stock Number Update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="numberOfStock">number of stock</label>
+        <div class="input-group">
+          <input name="numberOfStock" type="text" id="numberOfStock" class="form-control" [(ngModel)]="numberOfStock" />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close(numberOfStock)">Save</button>
+  </div>
+</ng-template>
+
+{{closeResult}}

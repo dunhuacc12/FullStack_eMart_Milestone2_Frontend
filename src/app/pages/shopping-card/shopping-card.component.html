@@ -1,0 +1,67 @@
+<div class="div-shopping-card">
+  <h3 class="h3 mb-3 font-weight-normal">Shopping Cart</h3>
+
+  <!-- shopping list -->
+  <div class="list-group">
+    <div class="list-group-item" *ngFor="let shoppingListItem of shoppingList.products">
+      <div class="div-eMartListItem d-flex flex-row align-items-center">
+
+        <div style="height: 80px; width: 80px; margin-left: 30px;" class="d-flex align-items-center">
+          <img [src]="shoppingListItem.imgUrl" class="img-fluid" alt="">
+        </div>
+
+        <label class="d-inline-block text-truncate"
+          style="width: 300px; max-width: 300px; height: 100%; margin-left: 50px;">{{shoppingListItem.itemName}}</label>
+
+        <label style="width: 200px; height: 100%; margin-left: 10px;">$ {{shoppingListItem.price}}</label>
+
+        <div class="d-flex align-items-center">
+          <button type="button" class="btn btn-light" style="margin-right: 15px;"
+            (click)="reduceNo(shoppingListItem)">-</button>
+          {{shoppingListItem.no}}
+          <button type="button" class="btn btn-light" style="margin-left: 15px;"
+            (click)="addNo(shoppingListItem)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- amount -->
+  <div style="margin-top: 30px; margin-left: 80px;">
+    <div>
+      <label class="label-title-black">Total Tax:</label>
+      <label class="label-price-red">{{shoppingList.tax}}</label>
+    </div>
+    <div>
+      <label class="label-title-black">Discount:</label>
+      <label class="label-price-red">{{shoppingList.discount}}</label>
+    </div>
+    <div>
+      <label class="label-title-black">Total Price:</label>
+      <label class="label-price-red">{{shoppingList.totalPrice}}</label>
+    </div>
+  </div>
+
+  <!-- button -->
+  <div class="d-flex justify-content-around" style="margin-top: 30px;">
+    <button class="btn btn-lg btn-primary btn-block" type="button" style="width: 300px;" (click)="applyDiscount()">Apply
+      Discount</button>
+    <button class="btn btn-lg btn-primary btn-block" type="button" style="width: 300px;"
+      (click)="checkout(content)">Checkout</button>
+  </div>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Thank you!</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Checkout Sucess!</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

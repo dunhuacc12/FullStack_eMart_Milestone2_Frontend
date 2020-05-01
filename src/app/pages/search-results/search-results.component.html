@@ -1,0 +1,64 @@
+<div class="div-search-result">
+  <form class="form-search-result" #myForm="ngForm" (ngSubmit)="onSubmit(myForm.value)" novalidate>
+
+    <!-- search bar -->
+    <div class='d-flex flex-row'>
+      <input [(ngModel)]='searchValue' name="inputSearch" type="text" id="inputSearch"
+        class="form-control" placeholder="Search" style="width: 680px">
+
+      <div style="padding-left: 20px;">
+        <button class="btn btn-lg btn-primary btn-block" type="submit" style="width: 100px;">Search</button>
+      </div>
+    </div>
+
+    <br>
+    <h3 class="h3 mb-3 font-weight-normal">{{searchValueLabel}}</h3>
+
+    <!-- filter -->
+    <label>Filter:</label>
+    <div class="d-flex flex-row align-items-center">
+      <label class="text-nowrap">Start Price</label>
+      <div class="input-group mb-3" style="margin-left: 10px;margin-right: 10px;">
+        <div class="input-group-prepend" style="margin-top: 5px; margin-bottom: 5px;">
+          <span class="input-group-text">$</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="startPrice">
+      </div>
+
+      <label class="text-nowrap">End Price</label>
+      <div class="input-group mb-3" style="margin-left: 10px;margin-right: 10px;">
+        <div class="input-group-prepend" style="margin-top: 5px; margin-bottom: 5px;">
+          <span class="input-group-text">$</span>
+        </div>
+        <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name="endPrice">
+      </div>
+
+      <label class="text-nowrap">Manufacturer</label>
+      <div class="input-group mb-3" style="margin-left: 10px;">
+        <input name="userName" type="text" id="userName" class="form-control" name="manufacturer">
+      </div>
+    </div>
+
+    <!-- search results list -->
+    <div class="list-group">
+      <div class="list-group-item" *ngFor="let searchResultItem of searchResult">
+        <div class="div-eMartListItem d-flex flex-row align-items-center">
+          <div style="height: 80px; width: 80px">
+            <img [src]="searchResultItem.imgUrl" class="img-fluid" alt="">
+          </div>
+
+          <label class="d-inline-block text-truncate"
+            style="width: 250px; max-width: 250px; height: 100%; margin-left: 10px;">{{searchResultItem.itemName}}</label>
+
+          <label style="width: 100px; height: 100%; margin-left: 10px;">$ {{searchResultItem.price | money}}</label>
+
+          <label class="d-inline-block text-truncate"
+            style="width: 250px; max-width: 250px;margin-left: 10px;">{{searchResultItem.storeName}}</label>
+
+          <button class="btn btn-lg btn-primary btn-block" type="button" style="width: 150px;"
+            (click)="onViewDetails(searchResultItem.itemId)">View Details</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

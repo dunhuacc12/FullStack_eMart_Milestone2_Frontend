@@ -1,0 +1,35 @@
+.div-signup-seller {
+  text-align: left;
+  display: flex;
+  margin-top: 40px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+.form-signup-seller {
+  width: 100%;
+  padding: 15px;
+  margin: auto;
+}
+.form-signup-seller .checkbox {
+  font-weight: 400;
+}
+.form-signup-seller .form-control {
+  /* position: relative; */
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signup-seller .form-control:focus {
+  z-index: 2;
+}
+.form-signup-seller input {
+  margin-bottom: 10px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.div-nowrap {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
