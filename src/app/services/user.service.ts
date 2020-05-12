@@ -14,7 +14,7 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   postLogin(user) {
-    return this.http.post(`${environment.baseUrl}/login`, JSON.stringify(user), httpOptions);
+    return this.http.post(`${environment.baseUrl}/session/${user.name}`, JSON.stringify(user), httpOptions);
   }
 
   getUserInfo(userName) {

@@ -29,47 +29,44 @@ export class SignupBuyerComponent implements OnInit {
   /* sign up process */
   onSubmit(value: any) {
     if (this.validInput(value)) {
-      // TODO Send the request when the microservice is completed
-      // this.userService.postSignUp4Buyer(value).subscribe(
-      //   data => {
-      //     console.log(JSON.stringify(data));
-      //     const info: any = data;
-      //     if (200 === info.code) {
-      //         console.log('sign up sucess, jump to login');
-      //         this.router.navigate(['/login']);
-      //     } else {
-      //       console.log('sign up faild');
-      //       this.alerts.push({type : 'danger', message: 'sign up error!'});
-      //     }
-      //   }
-      // );
-      this.router.navigate(['/login']);
+      this.userService.postSignUp4Buyer(value).subscribe(
+        data => {
+          console.log(JSON.stringify(data));
+          const info: any = data;
+          if (200 === info.status) {
+            console.log('sign up sucess, jump to login');
+            this.router.navigate(['/login']);
+          } else {
+            console.log('sign up faild');
+            this.alerts.push({ type: 'danger', message: 'sign up error!' });
+          }
+        }
+      );
     }
   }
 
   /* sing up checker */
   validInput(value: any): boolean {
     this.reset();
-    if (!value.name) {
-      this.alerts.push({type : 'danger', message: 'username required!'});
+    if (!value.userId) {
+      this.alerts.push({ type: 'danger', message: 'userId required!' });
       return false;
     }
-
     // password checker
     if (!value.password) {
-      this.alerts.push({type : 'danger', message: 'password required!'});
+      this.alerts.push({ type: 'danger', message: 'password required!' });
       return false;
     }
     if (value.password.length < 6) {
-      this.alerts.push({type : 'danger', message: 'password length must be greater than 6!'});
+      this.alerts.push({ type: 'danger', message: 'password length must be greater than 6!' });
       return false;
     }
     if (!value.confirmpassword) {
-      this.alerts.push({type : 'danger', message: 'password required!'});
+      this.alerts.push({ type: 'danger', message: 'password required!' });
       return false;
     }
     if (value.confirmpassword.length < 6) {
-      this.alerts.push({type : 'danger', message: 'password length must be greater than 6!'});
+      this.alerts.push({ type: 'danger', message: 'password length must be greater than 6!' });
       return false;
     }
     return true;

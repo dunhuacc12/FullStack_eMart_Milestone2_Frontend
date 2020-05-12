@@ -31,21 +31,19 @@ export class LoginComponent implements OnInit {
   /* login process */
   onSubmit(value: any) {
     if (this.validInput(value)) {
-      // TODO Send the request when the microservice is completed
-      // this.userService.postLogin(value).subscribe(
-      //   data => {
-      //     console.log(JSON.stringify(data));
-      //     const info: any = data;
-      //     if (200 === info.code) {
-      //         console.log('login sucess, jump to SearchItems');
-      //         this.router.navigate(['/searchItems']);
-      //     } else {
-      //       console.log('login faild');
-      //       this.alerts.push({type : 'danger', message: 'username or password error!'});
-      //     }
-      //   }
-      // );
-      this.router.navigate(['/searchItems']);
+      this.userService.postLogin(value).subscribe(
+        data => {
+          console.log(JSON.stringify(data));
+          const info: any = data;
+          if (200 === info.status) {
+            console.log('login sucess, jump to SearchItems');
+            this.router.navigate(['/searchItems']);
+          } else {
+            console.log('login faild');
+            this.alerts.push({ type: 'danger', message: 'username or password error!' });
+          }
+        }
+      );
     }
   }
   /* login checker */

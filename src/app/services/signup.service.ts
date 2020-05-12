@@ -17,4 +17,8 @@ export class SignupService {
     return this.http.post(`${environment.baseUrl}/signup-buyer`, JSON.stringify(user), httpOptions);
   }
 
+  postSignUp4Seller(user) {
+    return this.http.post(`${environment.baseUrl}/signup-seller`, JSON.stringify(user), httpOptions);
+  }
+
 }
