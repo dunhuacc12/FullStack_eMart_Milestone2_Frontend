@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchResultsService } from '../../services/searchresults.service';
+import { SearchItemsService } from '../../services/searchitems.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { SearchResult } from '../../models/SearchResult';
 
 const SEARCH_RESULTS: SearchResult[] = [
@@ -42,25 +41,32 @@ export class SearchResultsComponent implements OnInit {
   searchResult: SearchResult[];
   key: string;
 
-  constructor(private searchResultsService: SearchResultsService, private routeInfo: ActivatedRoute, private router: Router) {
+  constructor(private searchItemsService: SearchItemsService, private routeInfo: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit(): void {
     console.log('ngOnInit is called');
+    this.key = 'searchValue';
+    this.searchValue = this.routeInfo.snapshot.params[this.key];
+    this.searchValueLabel = '"' + this.searchValue + '" Search Results';
     this.doSearch();
   }
 
   doSearch() {
-    // TODO Send the request when the microservice is completed
-    // this.route.paramMap.pipe(
-    //   switchMap((params: ParamMap) =>
-    //     this.searchResultsService.getSearchResults(params.get('searchValue'))
-    //   )
-    // ).subscribe(items => this.searchResult = items as SearchResult[]);
-    this.key  = 'searchValue';
-    this.searchValue = this.routeInfo.snapshot.params[this.key];
-    this.searchValueLabel = '"' + this.searchValue + '" Search Results';
-    this.searchResult = SEARCH_RESULTS;
+    this.searchItemsService.searchItems(this.searchValue).subscribe(
+      data => {
+        console.log(JSON.stringify(data));
+        const info: any = data;
+        if (200 === info.status) {
+          if (info.data !== null && info.data.length > 0) {
+            console.log('search sucess, see search result');
+            this.searchResult = info.data;
+          }
+        } else {
+          console.log('search faild');
+        }
+      }
+    );
   }
 
   /* when Search button click */

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchItemsService } from '../../services/searchitems.service';
 import { Router } from '@angular/router';
+import { SearchResult } from '../../models/SearchResult';
 
 @Component({
   selector: 'app-search-items',
@@ -23,20 +24,20 @@ export class SearchItemsComponent implements OnInit {
 
   /* when Search button click */
   onSubmit(value: any) {
-    // TODO Send the request when the microservice is completed
-    // this.searchItemsService.getSearchItems(value).subscribe(
-    //   data => {
-    //     console.log(JSON.stringify(data));
-    //     const info: any = data;
-    //     if (200 === info.code) {
-    //       console.log('search sucess, jump to search result');
-    //       this.router.navigate(['/searchResult', value]);
-    //     } else {
-    //       console.log('search faild');
-    //     }
-    //   }
-    // );
-    this.router.navigate(['/searchResult', value.inputSearch]);
+    this.searchItemsService.searchItems(value.inputSearch).subscribe(
+      (data: SearchResult[]) => {
+        console.log(JSON.stringify(data));
+        const info: any = data;
+        if (200 === info.status) {
+          if (info.data !== null && info.data.length > 0) {
+            console.log('search sucess, jump to search result');
+            this.router.navigate(['/searchResult', value.inputSearch]);
+          }
+        } else {
+          console.log('search faild');
+        }
+      }
+    );
   }
 
   onSearch(tip: string) {
