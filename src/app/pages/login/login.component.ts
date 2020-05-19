@@ -37,6 +37,8 @@ export class LoginComponent implements OnInit {
           const info: any = data;
           if (200 === info.status) {
             console.log('login sucess, jump to SearchItems');
+            // set user id to localStorage
+            localStorage.setItem('userId', value.name);
             this.router.navigate(['/searchItems']);
           } else {
             console.log('login faild');

@@ -13,14 +13,14 @@
     <!-- image -->
     <div class="d-flex justify-content-center">
       <div class="div-img">
-        <img [src]="productDetail.imgUrl[page-1]" class="img-fluid" alt="">
+        <img [(src)]="productDetail.imgUrl[page-1]" *ngIf="productDetail.imgUrl" class="img-fluid" alt="">
         <ngb-pagination class="d-flex justify-content-center" [collectionSize]="imgSize" [(page)]="page"></ngb-pagination>
       </div>
     </div>
 
     <!-- Add to Card -->
     <div class="d-flex justify-content-between align-items-center" style="margin-top: 70px;">
-      <label class="label-price-red">$ {{productDetail.price}}</label>
+      <label class="label-price-red">$ {{productDetail.price | money}}</label>
       <button class="btn btn-lg btn-primary btn-block" type="button" style="width: 200px;" (click)="addToCard(content)">Add to Card</button>
     </div>
 

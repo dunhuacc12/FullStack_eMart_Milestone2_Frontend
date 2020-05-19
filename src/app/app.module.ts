@@ -22,6 +22,7 @@ import { MystoreComponent } from './pages/mystore/mystore.component';
 import { AddItemComponent } from './pages/add-item/add-item.component';
 import { SellerReportComponent } from './pages/seller-report/seller-report.component';
 import { MoneyPipe } from './pipe/money.pipe';
+import { DiscountPipe } from './pipe/discount.pipe';
 // import { MoneyPipe } from './pipe/money.pipe';
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MoneyPipe } from './pipe/money.pipe';
     MystoreComponent,
     AddItemComponent,
     SellerReportComponent,
-    MoneyPipe
+    MoneyPipe,
+    DiscountPipe
   ],
   imports: [
     BrowserModule,

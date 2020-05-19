@@ -5,4 +5,6 @@ export interface ShoppingList {
   totalPrice: number;
   tax: number;
   discount: number;
+  discountId: number;
+  userId: string;
 }

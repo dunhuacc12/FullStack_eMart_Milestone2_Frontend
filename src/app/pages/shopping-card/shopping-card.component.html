@@ -13,7 +13,7 @@
         <label class="d-inline-block text-truncate"
           style="width: 300px; max-width: 300px; height: 100%; margin-left: 50px;">{{shoppingListItem.itemName}}</label>
 
-        <label style="width: 200px; height: 100%; margin-left: 10px;">$ {{shoppingListItem.price}}</label>
+        <label style="width: 200px; height: 100%; margin-left: 10px;">$ {{shoppingListItem.price | money}}</label>
 
         <div class="d-flex align-items-center">
           <button type="button" class="btn btn-light" style="margin-right: 15px;"
@@ -30,21 +30,21 @@
   <div style="margin-top: 30px; margin-left: 80px;">
     <div>
       <label class="label-title-black">Total Tax:</label>
-      <label class="label-price-red">{{shoppingList.tax}}</label>
+      <label class="label-price-red">{{shoppingList.tax | money}}</label>
     </div>
     <div>
       <label class="label-title-black">Discount:</label>
-      <label class="label-price-red">{{shoppingList.discount}}</label>
+      <label class="label-price-red">{{shoppingList.discount | discount}}</label>
     </div>
     <div>
       <label class="label-title-black">Total Price:</label>
-      <label class="label-price-red">{{shoppingList.totalPrice}}</label>
+      <label class="label-price-red">{{shoppingList.totalPrice | money}}</label>
     </div>
   </div>
 
   <!-- button -->
   <div class="d-flex justify-content-around" style="margin-top: 30px;">
-    <button class="btn btn-lg btn-primary btn-block" type="button" style="width: 300px;" (click)="applyDiscount()">Apply
+    <button class="btn btn-lg btn-primary btn-block" type="button" style="width: 300px;" (click)="open(discountContent)">Apply
       Discount</button>
     <button class="btn btn-lg btn-primary btn-block" type="button" style="width: 300px;"
       (click)="checkout(content)">Checkout</button>
@@ -63,5 +63,26 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>
+
+<ng-template #discountContent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Please enter discount code</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <input name="discountCode" type="text" id="discountCode" class="form-control" [(ngModel)]="discountCode" />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="applyDiscount(modal)">apply</button>
   </div>
 </ng-template>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PurchaseHistory } from '../../models/PurchaseHistory';
+import { PurchaseHistoryService } from '../../services/purchaseHistory.service';
 
 const PURCHASE_HISTORY_LIST: PurchaseHistory[] = [
   {
@@ -37,15 +38,26 @@ export class PurchaseHistoryComponent implements OnInit {
 
   purchaseHistoryList: PurchaseHistory[];
 
-  constructor() { }
+  constructor(private purchaseHistoryService: PurchaseHistoryService) { }
 
   ngOnInit(): void {
     this.doSearch();
   }
 
   doSearch() {
-    // TODO Send the request when the microservice is completed
-    this.purchaseHistoryList = PURCHASE_HISTORY_LIST;
-  }
 
+    const userId = localStorage.getItem('userId');
+    this.purchaseHistoryService.getPurchaseHistory(userId)
+      .subscribe(
+        data => {
+          console.log(JSON.stringify(data));
+          const info: any = data;
+          if (200 === info.status) {
+            this.purchaseHistoryList = info.data;
+          } else {
+            console.log('search faild');
+          }
+        }
+      );
+  }
 }

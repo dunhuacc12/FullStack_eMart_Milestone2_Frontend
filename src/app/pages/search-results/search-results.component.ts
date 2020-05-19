@@ -71,20 +71,9 @@ export class SearchResultsComponent implements OnInit {
 
   /* when Search button click */
   onSubmit(value: any) {
-    // TODO Send the request when the microservice is completed
-    // this.searchItemsService.getSearchItems(value).subscribe(
-    //   data => {
-    //     console.log(JSON.stringify(data));
-    //     const info: any = data;
-    //     if (200 === info.code) {
-    //       console.log('search sucess, jump to search result');
-    //       this.router.navigate(['/searchResult', value]);
-    //     } else {
-    //       console.log('search faild');
-    //     }
-    //   }
-    // );
-    this.router.navigate(['/searchResult', value.inputSearch]);
+    // this.router.navigate(['/searchResult', value.inputSearch]);
+    this.searchValueLabel = '"' + this.searchValue + '" Search Results';
+    this.doSearch();
   }
 
   onViewDetails(itemId: any) {

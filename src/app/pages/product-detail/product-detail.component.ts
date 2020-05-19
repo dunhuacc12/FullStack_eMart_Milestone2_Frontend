@@ -6,30 +6,12 @@ import { switchMap } from 'rxjs/operators';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 const PRODUCT_DETAIL: ProductDetail = {
-  productId: '1',
-  imgUrl: [
-    'https://shopstatic.vivo.com.cn/vivoshop/commodity/14/10001814_1576461527559_750x750.png.webp',
-    'https://shopstatic.vivo.com.cn/vivoshop/commodity/14/10001814_1576461527223_750x750.png.webp',
-    'https://shopstatic.vivo.com.cn/vivoshop/commodity/14/10001814_1576461527445_750x750.png.webp',
-    'https://shopstatic.vivo.com.cn/vivoshop/commodity/14/10001814_1576461527690_750x750.png.webp',
-  ],
-  productName: 'vivo X30 Pro',
-  price: '600',
-  storeName: 'vivo mobile store',
-  descriptions: [
-    'Height: 158.45mm',
-    'Width: 74.10mm',
-    'CPU model: Exynos 980',
-    'CPU core number: eight core processor',
-    'CPU frequency: 2 * 2.2GHz A77 + 6 * 1.8GHz A55',
-    'Storage memory (RAM): 8GB',
-    'Body storage (ROM): 128GB / 256GB',
-    'Size (inches): 6.44 inches',
-    'Screen ratio: 20: 9',
-    'Resolution: 2400 × 1080',
-    'Front camera pixels: 32 million pixels',
-    'Rear camera pixels: 64 million pixels'
-  ]
+  productId: '',
+  imgUrl: [],
+  productName: '',
+  price: 0,
+  storeName: '',
+  descriptions: []
 };
 
 @Component({
@@ -42,52 +24,67 @@ export class ProductDetailComponent implements OnInit {
   /**
    * product detail infomation object.
    */
-  productDetail: ProductDetail;
+  productDetail: ProductDetail = PRODUCT_DETAIL;
   page: number;
   imgSize: number;
   searchValue: string;
+  productId: string;
 
   // tslint:disable-next-line:max-line-length
   constructor(private productDetailService: ProductDetailService, private routeInfo: ActivatedRoute, private router: Router, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     console.log('ngOnInit is called');
+    const key = 'productId';
+    this.productId = this.routeInfo.snapshot.params[key];
     this.doSearch();
   }
 
+  /** search product detail */
   doSearch() {
-    // TODO Send the request when the microservice is completed
-    // this.route.paramMap.pipe(
-    //   switchMap((params: ParamMap) =>
-    //     this.productDetailService.getProductDetail(params.get('productId'))
-    //   )
-    // ).subscribe(items => this.productDetail = items as ProductDetail);
-    this.productDetail = PRODUCT_DETAIL;
-    this.imgSize = this.productDetail.imgUrl.length * 10;
-    this.page = 1;
+    this.productDetailService.getProductDetail(this.productId)
+      .subscribe(
+        data => {
+          console.log(JSON.stringify(data));
+          const info: any = data;
+          if (200 === info.status) {
+            if (info.data !== null) {
+              console.log('search sucess, see search result');
+              this.productDetail = info.data;
+              if (this.productDetail.imgUrl && this.productDetail.imgUrl.length > 0) {
+                this.imgSize = this.productDetail.imgUrl.length * 10;
+                this.page = 1;
+              }
+            }
+          } else {
+            console.log('search faild');
+          }
+        }
+      );
   }
 
   /* when Search button click */
   onSubmit(value: any) {
-    // TODO Send the request when the microservice is completed
-    // this.searchItemsService.getSearchItems(value).subscribe(
-    //   data => {
-    //     console.log(JSON.stringify(data));
-    //     const info: any = data;
-    //     if (200 === info.code) {
-    //       console.log('search sucess, jump to search result');
-    //       this.router.navigate(['/searchResult', value]);
-    //     } else {
-    //       console.log('search faild');
-    //     }
-    //   }
-    // );
     this.router.navigate(['/searchResult', value.inputSearch]);
   }
 
   addToCard(content) {
-    // TODO add to cart
-    this.open(content);
+    // get user id from localStorage
+    const userId = localStorage.getItem('userId');
+    // add this item to cart
+    this.productDetailService.addToCart(this.productId, userId)
+      .subscribe(
+        data => {
+          console.log(JSON.stringify(data));
+          const info: any = data;
+          if (200 === info.status) {
+            console.log('add to cart successfully');
+            this.open(content);
+          } else {
+            console.log('add faild');
+          }
+        }
+      );
   }
 
   open(content) {
