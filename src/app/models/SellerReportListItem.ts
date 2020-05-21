@@ -1,5 +1,5 @@
 export interface SellerReportListItem {
-  itemId: string;
+  itemId: number;
   itemName: string;
   imgUrl: string;
   numberofSales: number;

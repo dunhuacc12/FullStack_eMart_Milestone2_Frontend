@@ -24,6 +24,7 @@ import { SellerReportComponent } from './pages/seller-report/seller-report.compo
 import { MoneyPipe } from './pipe/money.pipe';
 import { DiscountPipe } from './pipe/discount.pipe';
 // import { MoneyPipe } from './pipe/money.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +53,8 @@ import { DiscountPipe } from './pipe/discount.pipe';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

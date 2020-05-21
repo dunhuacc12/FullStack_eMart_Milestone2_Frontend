@@ -1,51 +1,76 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { SellerReportListItem } from '../../models/SellerReportListItem';
+import { SellerReport } from '../../models/SellerReport';
+import { SellerReportService } from '../../services/sellerReport.service';
+import { NgbDateParserFormatter, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
-const SELLER_REPORT_LIST: SellerReportListItem[] = [
-  {
-    itemId: '1',
-    itemName: 'vivo X30 pro',
-    imgUrl: 'https://shopstatic.vivo.com.cn/vivoshop/commodity/14/10001814_1576461527559_750x750.png.webp',
-    numberofSales: 2,
-    totalAmount: 1000
-  },
-  {
-    itemId: '2',
-    imgUrl: 'https://cdn.cnbj1.fds.api.mi-img.com/mi-mall/38153b7ed552c6f42d88732a8e95b9fc.jpg?w=800&h=532',
-    itemName: 'Xiaomi Mi Note 10 Pro',
-    numberofSales: 3,
-    totalAmount: 1500
-  },
-  {
-    itemId: '3',
-    imgUrl: 'https://2d.zol-img.com.cn/product/204_400x300/581/ceeHsI0R2muyU.jpg',
-    itemName: 'HUAWEI P40 Pro',
-    numberofSales: 4,
-    totalAmount: 2000
+/**
+ * This Service handles how the date is rendered and parsed from keyboard i.e. in the bound input field.
+ */
+@Injectable()
+export class CustomDateParserFormatter extends NgbDateParserFormatter {
+
+  readonly DELIMITER = '/';
+
+  parse(value: string): NgbDateStruct | null {
+    if (value) {
+      const date = value.split(this.DELIMITER);
+      return {
+        day: parseInt(date[0], 10),
+        month: parseInt(date[1], 10),
+        year: parseInt(date[2], 10)
+      };
+    }
+    return null;
   }
-];
 
+  format(date: NgbDateStruct | null): string {
+    return date ? date.day + this.DELIMITER + date.month + this.DELIMITER + date.year : '';
+  }
+}
 @Component({
   selector: 'app-seller-report',
   templateUrl: './seller-report.component.html',
-  styleUrls: ['./seller-report.component.css']
+  styleUrls: ['./seller-report.component.css'],
+  providers: [
+    { provide: NgbDateParserFormatter, useClass: CustomDateParserFormatter }
+  ],
 })
 export class SellerReportComponent implements OnInit {
 
-  sellerReportList: SellerReportListItem[];
+  selectedStartDate: NgbDateStruct;
+  selectedEndDate: NgbDateStruct;
+  sellerReport: SellerReport = {
+    startDate: null,
+    endDate: null,
+    userId: null
+  };
+  sellerReportList: SellerReportListItem[] = [];
 
-  constructor() { }
+  constructor(private sellerReportService: SellerReportService, private formater: NgbDateParserFormatter) { }
 
   ngOnInit(): void {
-    this.doSearch();
-  }
-
-  doSearch() {
-    // TODO Send the request when the microservice is completed
-    this.sellerReportList = SELLER_REPORT_LIST;
   }
 
   onView() {
-    // TODO Send the request when the microservice is completed
+    // get user id from localStorage
+    const userId = localStorage.getItem('userId');
+    this.sellerReport.userId = userId;
+    this.sellerReport.startDate = this.formater.format(this.selectedStartDate);
+    this.sellerReport.endDate = this.formater.format(this.selectedEndDate);
+    // add this item to cart
+    this.sellerReportService.postGetSellerReport(this.sellerReport)
+      .subscribe(
+        data => {
+          console.log(JSON.stringify(data));
+          const info: any = data;
+          if (200 === info.status) {
+            console.log('search seller report successfull');
+            this.sellerReportList = info.data;
+          } else {
+            console.log('search seller report faild');
+          }
+        }
+      );
   }
 }

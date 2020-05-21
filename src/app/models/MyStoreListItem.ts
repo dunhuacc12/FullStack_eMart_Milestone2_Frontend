@@ -4,5 +4,5 @@ export interface MyStoreListItem {
   itemName: string;
   price: number;
   status: string;
-  stock_number: number;
+  stockNumber: number;
 }

@@ -7,7 +7,7 @@
     <!-- start date -->
     <label style="width: 100px;">Start Date:</label>
     <div class="input-group" style="width: 200px">
-      <input id="startDate" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp1="ngbDatepicker">
+      <input id="startDate" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp1="ngbDatepicker" [(ngModel)]="selectedStartDate">
       <div class="input-group-append">
         <button class="btn btn-outline-secondary calendar" (click)="dp1.toggle()" type="button"></button>
       </div>
@@ -16,7 +16,7 @@
     <!-- end date -->
     <label style="width: 100px; margin-left: 40px;">End Date:</label>
     <div class="input-group" style="width: 200px">
-      <input id="endDate" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp2="ngbDatepicker">
+      <input id="endDate" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp2="ngbDatepicker" [(ngModel)]="selectedEndDate">
       <div class="input-group-append">
         <button class="btn btn-outline-secondary calendar" (click)="dp2.toggle()" type="button"></button>
       </div>

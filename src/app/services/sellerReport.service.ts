@@ -9,16 +9,12 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class MyStoreService {
+export class SellerReportService {
 
   constructor(private http: HttpClient) { }
 
-  getMyStoreInfo(userId) {
-    return this.http.get(`${environment.baseUrl4Product}/mystore/${userId}`, httpOptions);
-  }
-
-  postUpdateStockNumber(product) {
-    return this.http.post(`${environment.baseUrl4Product}/updateStockNumber`, JSON.stringify(product), httpOptions);
+  postGetSellerReport(dto) {
+    return this.http.post(`${environment.baseUrl4Product}/getSellerReport`, JSON.stringify(dto), httpOptions);
   }
 
 }
