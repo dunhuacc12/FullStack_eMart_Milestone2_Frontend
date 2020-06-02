@@ -35,15 +35,20 @@ export class LoginComponent implements OnInit {
         data => {
           console.log(JSON.stringify(data));
           const info: any = data;
-          if (200 === info.status) {
+          if (info.access_token != null) {
             console.log('login sucess, jump to SearchItems');
             // set user id to localStorage
             localStorage.setItem('userId', value.name);
+            localStorage.setItem('access_token', info.access_token);
             this.router.navigate(['/searchItems']);
           } else {
             console.log('login faild');
             this.alerts.push({ type: 'danger', message: 'username or password error!' });
           }
+        },
+        error => {
+          console.log('login faild');
+          this.alerts.push({ type: 'danger', message: 'username or password error!' });
         }
       );
     }

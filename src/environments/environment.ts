@@ -4,9 +4,10 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:8099',
-  baseUrl4Product: 'http://localhost:8098',
-  baseUrl4Order: 'http://localhost:8097'
+  baseUrl: 'http://localhost:5555/api/backend-emart-user',
+  baseUrl4Product: 'http://localhost:5555/api/backend-emart-product',
+  baseUrl4Order: 'http://localhost:5555/api/backend-emart-order',
+  baseUrl4Auth: 'http://localhost:5555/api/backend-emart-auth'
 };
 
 /*
